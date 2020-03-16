@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+var her_port = process.env.PORT || 5050;
 const package = require('../package.json')
 const config = require('./cli.js')
 .program({name: package.name.replace(/@.+\//, ''), version: package.version})
@@ -16,7 +16,7 @@ const config = require('./cli.js')
 .parse(process.argv)
 
 global.address = config.address
-config.port = (config.port || '8080').split(':').map(string => parseInt(string))
+config.port = (config.port || her_port).split(':').map(string => parseInt(string))
 const invalid = value => (isNaN(value) || value < 1 || value > 65535)
 if (config.port.some(invalid)) {
 	console.log('Port must be a number higher than 0 and lower than 65535.')
